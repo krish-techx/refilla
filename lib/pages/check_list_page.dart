@@ -18,8 +18,10 @@ class _CheckListPageState extends State<CheckListPage> {
   Widget build(BuildContext context) {
     final stock = context.watch<StockProvider>();
     final checklist = stock.checklist;
-    final itemMaster =
-        stock.itemMaster.where((i) => !checklist.contains(i)).toList();
+    final stockList =
+        stock.stockList
+            .where((i) => !checklist.any((c) => c.name == i.name))
+            .toList();
 
     return Scaffold(
       appBar: AppBar(title: Text('Checklist')),
@@ -47,7 +49,7 @@ class _CheckListPageState extends State<CheckListPage> {
 
                         return RefillItem(
                           item: item,
-                          onTap: () => stock.removeFromChecklist(item),
+                          onTap: () => stock.removeCheckItem(item),
                         );
                       },
                     ),
@@ -73,13 +75,13 @@ class _CheckListPageState extends State<CheckListPage> {
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,
                 padding: EdgeInsets.zero,
-                itemCount: itemMaster.length,
+                itemCount: stockList.length,
                 itemBuilder: (context, index) {
-                  final item = itemMaster[index];
+                  final item = stockList[index];
 
                   return StockItem(
                     item: item,
-                    onTap: () => stock.addItemToChecklist(item),
+                    onTap: () => stock.addCheckItem(item),
                   );
                 },
               ),
