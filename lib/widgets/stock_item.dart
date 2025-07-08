@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:refilla/constants/app_values.dart';
+import 'package:refilla/models/item_model.dart';
 import 'package:refilla/utils/size_utils.dart';
 
 class StockItem extends StatelessWidget {
-  final String item;
+  final ItemModel item;
   final VoidCallback? onTap;
 
   const StockItem({super.key, required this.item, this.onTap});
@@ -22,7 +23,7 @@ class StockItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(AppValues.smallPadding),
           child: Center(
             child: Text(
-              item,
+              item.name,
               textAlign: TextAlign.center,
               style: const TextStyle(fontWeight: FontWeight.w600),
             ),

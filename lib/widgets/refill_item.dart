@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:refilla/constants/app_values.dart';
+import 'package:refilla/models/item_model.dart';
 
 class RefillItem extends StatelessWidget {
-  final String item;
+  final ItemModel item;
   final VoidCallback? onTap;
 
   const RefillItem({super.key, required this.item, this.onTap});
@@ -23,7 +24,10 @@ class RefillItem extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(item, style: const TextStyle(fontWeight: FontWeight.bold)),
+                Text(
+                  item.name,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
                 const SizedBox(height: AppValues.smallPadding),
                 const Text('0.0', style: TextStyle(color: Colors.grey)),
               ],
