@@ -18,10 +18,10 @@ class ItemModelAdapter extends TypeAdapter<ItemModel> {
     };
     return ItemModel(
       name: fields[0] as String,
-      quantity: fields[2] as int,
-      price: fields[1] as double,
-      unit: fields[3] as String,
-      image: fields[4] as String,
+      quantity: fields[2] as int?,
+      price: fields[1] as double?,
+      unit: fields[3] as String?,
+      image: fields[4] as String?,
     );
   }
 

@@ -2,17 +2,32 @@ import 'package:hive/hive.dart';
 import 'package:refilla/models/item_model.dart';
 
 class HiveManager {
-  static const String stockBoxName = 'stockBox';
-  static const String checklistBoxName = 'checklistBox';
+  static const String _stockBoxName = 'stockBox';
+  static const String _checklistBoxName = 'checklistBox';
+  static const String _metaBoxName = 'appMetaBox';
 
   static late Box<ItemModel> _stockBox;
   static late Box<ItemModel> _checklistBox;
 
   static Future<void> init() async {
     Hive.registerAdapter(ItemModelAdapter());
-    _stockBox = await Hive.openBox<ItemModel>(stockBoxName);
-    _checklistBox = await Hive.openBox<ItemModel>(checklistBoxName);
+    _stockBox = await Hive.openBox<ItemModel>(_stockBoxName);
+    _checklistBox = await Hive.openBox<ItemModel>(_checklistBoxName);
+    await Hive.openBox(_metaBoxName);
   }
+
+  // region ##### Meta operations #####
+  static Future<void> markFirstLaunchDone() async {
+    final box = Hive.box(_metaBoxName);
+    await box.put('isFirstLaunch', false);
+  }
+
+  static bool isFirstLaunch() {
+    final box = Hive.box(_metaBoxName);
+    return box.get('isFirstLaunch', defaultValue: true);
+  }
+
+  // endregion
 
   // region ##### Stock operations #####
   static List<ItemModel> getStockItems() => _stockBox.values.toList();
