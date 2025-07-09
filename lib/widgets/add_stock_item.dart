@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:refilla/constants/app_values.dart';
-import 'package:refilla/models/item_model.dart';
+import 'package:refilla/dialogs/add_stock_dialog.dart';
 import 'package:refilla/utils/size_utils.dart';
 
-class StockItem extends StatelessWidget {
-  final ItemModel item;
-  final VoidCallback? onTap;
-
-  const StockItem({super.key, required this.item, this.onTap});
+class AddStockItem extends StatelessWidget {
+  const AddStockItem({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,21 +12,22 @@ class StockItem extends StatelessWidget {
       height: SizeUtils.getHeight(context) * 0.1,
       width: SizeUtils.getHeight(context) * 0.1,
       child: Card(
+        color: Colors.grey[200],
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppValues.defaultRadius),
         ),
         child: InkWell(
-          onTap: onTap,
           borderRadius: BorderRadius.circular(AppValues.defaultRadius),
-          child: Center(
-            child: Text(
-              item.name,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontWeight: FontWeight.w600),
-            ),
+          onTap: () => _addStock(context),
+          child: const Center(
+            child: Icon(Icons.add, size: 32, color: Colors.black45),
           ),
         ),
       ),
     );
+  }
+
+  void _addStock(BuildContext context) {
+    showDialog(context: context, builder: (context) => const AddStockDialog());
   }
 }
