@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:refilla/constants/app_values.dart';
 import 'package:refilla/providers/stock_provider.dart';
 import 'package:refilla/utils/size_utils.dart';
+import 'package:refilla/widgets/add_stock_item.dart';
 import 'package:refilla/widgets/refill_item.dart';
 import 'package:refilla/widgets/stock_item.dart';
 
@@ -33,28 +34,39 @@ class _CheckListPageState extends State<CheckListPage> {
               padding: const EdgeInsets.symmetric(
                 horizontal: AppValues.smallPadding * 2,
               ),
-              child: Column(
-                children: [
-                  Expanded(
-                    child: GridView.builder(
-                      itemCount: checklist.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        mainAxisSpacing: 12,
-                        crossAxisSpacing: 12,
-                        childAspectRatio: 0.8,
-                      ),
-                      itemBuilder: (context, index) {
-                        final item = checklist[index];
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child:
+                    checklist.isEmpty
+                        ? Center(
+                          child: Text(
+                            'All items are up-to date',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        )
+                        : GridView.builder(
+                          itemCount: checklist.length,
+                          shrinkWrap: true,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                mainAxisSpacing: 12,
+                                crossAxisSpacing: 12,
+                                childAspectRatio: 0.8,
+                              ),
+                          itemBuilder: (context, index) {
+                            final item = checklist[index];
 
-                        return RefillItem(
-                          item: item,
-                          onTap: () => stock.removeCheckItem(item),
-                        );
-                      },
-                    ),
-                  ),
-                ],
+                            return RefillItem(
+                              item: item,
+                              onTap: () => stock.removeCheckItem(item),
+                            );
+                          },
+                        ),
               ),
             ),
           ),
@@ -75,10 +87,11 @@ class _CheckListPageState extends State<CheckListPage> {
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,
                 padding: EdgeInsets.zero,
-                itemCount: stockList.length,
+                itemCount: stockList.length + 1,
                 itemBuilder: (context, index) {
-                  final item = stockList[index];
+                  if (index == stockList.length) return AddStockItem();
 
+                  final item = stockList[index];
                   return StockItem(
                     item: item,
                     onTap: () => stock.addCheckItem(item),

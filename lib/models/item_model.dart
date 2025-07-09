@@ -8,23 +8,23 @@ class ItemModel {
   final String name;
 
   @HiveField(1)
-  final double price;
+  final double? price;
 
   @HiveField(2)
-  final int quantity;
+  final int? quantity;
 
   @HiveField(3)
-  final String unit;
+  final String? unit;
 
   @HiveField(4)
-  final String image;
+  final String? image;
 
   ItemModel({
     required this.name,
-    required this.quantity,
-    required this.price,
-    required this.unit,
-    required this.image,
+    this.quantity,
+    this.price,
+    this.unit,
+    this.image,
   });
 
   Map<String, dynamic> toJson() => {

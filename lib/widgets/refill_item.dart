@@ -14,11 +14,11 @@ class RefillItem extends StatelessWidget {
       child: Card(
         elevation: 2,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppValues.smallPadding),
+          borderRadius: BorderRadius.circular(AppValues.defaultRadius),
         ),
         child: InkWell(
           onTap: onTap,
-          borderRadius: BorderRadius.circular(AppValues.smallPadding),
+          borderRadius: BorderRadius.circular(AppValues.defaultRadius),
           child: Padding(
             padding: const EdgeInsets.all(AppValues.smallPadding),
             child: Column(
